@@ -1,4 +1,5 @@
 const scatteredDataArray = []; //Масив для розпарсених данних
+let subtitleContainer = null; //контейнер для зберігання субтитрів
 
 
 
@@ -15,17 +16,20 @@ let timestampType = null; //змінна яка зберігає тип часо
 //Знаходимо елемент кнопки генерації
 const buttonEl = document.querySelector('.js-button');
 //Чіпляємо слухач на кнопку генерації
-buttonEl.addEventListener('click', parseEnteredText);
+buttonEl.addEventListener('click', generateSub);//parseEnteredText
 
 
 //Знаходимо елемент текстової області для вводу тексту з часовими мітками
 const textareaInputEl = document.querySelector('.js-textarea-input');
+
+//Знаходимо елемент для виводу тексту з внутрішньою структурою субтитрів
+const textareaOutputEl = document.querySelector('.js-textarea-output');
+
 //Чіпляємо слухач на  текстову область вводу тексту з часовими мітками
 textareaInputEl.addEventListener('input', copyTextFromTextarea);
 //Функція для додавання данних з текстового поля для вводу в змінну dataContainer
 function copyTextFromTextarea(element) { 
     dataСontainer = element.target.value;
-    // console.log(dataСontainer);
 }
 
 //Функція для визначення типу часової мітки 1 - якщо формат XX:XX, 2 - якщо формат XX:XX:XX, 3 - якщо формат  X:XX:XX
@@ -56,7 +60,6 @@ function timestampTypeDetermination(i) {
                         if (dataСontainer.charCodeAt(i + 5) >= 48 && dataСontainer.charCodeAt(i + 5) <= 57) {
                             if (dataСontainer.charCodeAt(i + 6) >= 48 && dataСontainer.charCodeAt(i + 6) <= 57) {
                                 timestampType = 3; //якщо формат типу X:XX:XX
-                                console.log(666);
                             }
                         }
                     }
@@ -188,12 +191,37 @@ function normalizeСurrentTextContainerData(textсontainer) {
 
 
 //  console.log(normalizeСurrentTextContainerData(timestamp));
-    console.log(scatteredDataArray);
+    
 
-//Знаходимо елемент текстової області для виводу тексту тексту структури srt файлу
-const textareaOutputEl = document.querySelector('.js-textarea-output');
+// //Знаходимо елемент текстової області для виводу тексту тексту структури srt файлу
+// const textareaOutputEl = document.querySelector('.js-textarea-output');
 
-
+/*---------------ГЕНЕРАЦІЯ СТРУКТУРИ ФАЙЛУ СУБТИТРІВ----------------------*/
+//Функція для генерації структури SRT - файлу
+function generateSRT() {
+    scatteredDataArray.forEach(({ firstTimestamp, secondTimestamp, subtitleText }, index) => { //Цикл перебору масиву для розпарсених данних, та генерації текстової структури субтитрів в форматі SRT
+        //Блок для приведення часових міток до формату xx:xx:xx
+        switch (firstTimestamp.length) {
+            case 5: firstTimestamp = `00:${firstTimestamp}`; //якщо довжина часової мітки 5 символів, додаємо на початку "00:"
+                break;
+            case 7: firstTimestamp = `0${firstTimestamp}`; //якщо довжина часової мітки 7 символів, додаємо на початку "0"
+                break;
+            default: firstTimestamp = `${firstTimestamp}`; //всі інші варіани (8 символів) лишаємо як є
+        }
+        //блок для покрокового конструювання фрагментів структури SRT файлу з даних масиву для розпарсених данних та об'єднання їх в єдиний рядок символів
+        if (index === 0) { //конструюємо перший фрагмент субтитрів та додаємо в контейнер для зберігання субтитрів
+            subtitleContainer = `${index + 1}${String.fromCharCode(10)}${firstTimestamp},000 --> ${secondTimestamp},000${String.fromCharCode(10)}${subtitleText}${String.fromCharCode(10, 10)}`;
+        } else {//конструюємо наступний фрагмент субтитрів та додаємо до наступних в контейнері для зберігання субтитрів
+            subtitleContainer =subtitleContainer + `${index + 1}${String.fromCharCode(10)}${firstTimestamp},000 --> ${secondTimestamp},000${String.fromCharCode(10)}${subtitleText}${String.fromCharCode(10,10)}`;
+        }
+    });
+}
+//Функція для виконання генерації субтитрів
+function generateSub() {
+    parseEnteredText(); // виконуємо фунцію для розпарсювання введеного тексту
+    generateSRT(); // виконуємо функцію для генерації структури SRT - файлу
+    textareaOutputEl.textContent = subtitleContainer; //отриманий текст структури субтитрів з контейнера для зберігання субтитрів додаємо як контент в елемент для виводу тексту з внутрішньою структурою субтитрів для відображення на сторінці
+}
 
 
 
