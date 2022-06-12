@@ -11,6 +11,15 @@
     <h1>Додаток для розпарсювання результатів обробки тексту з часовими мітками в oTranscribe та створення по результатах структури субтитрів в srt форматі</h1>
     <form class="form">
         <textarea name="" placeholder="введіть текст з часовими мітками" id="" cols="30" rows="10" class="js-textarea-input"></textarea>
+            <label class="form__format-choice  sbv">
+                SBV
+                <input type="radio" name="format" checked class="js-choose-sbv-format">
+            </label>
+            <label class="form__format-choice  srt">
+                SRT
+                <input type="radio" name="format" class="js-choose-srt-format">
+            </label>
+            <p class="method-description js-method-description">Оберіть формат субтитрів</p>
         <button type="button" class="form__button js-button">
             згенерувати
         </button>
