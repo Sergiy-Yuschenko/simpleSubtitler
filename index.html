@@ -5,10 +5,10 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="./css/main.css">
-    <title>Розпарсювач oTranscribe</title>
+    <title>Генератор субтитрів із тексту з часовими мітками</title>
 </head>
 <body>
-    <h1>Додаток для розпарсювання результатів обробки тексту з часовими мітками в oTranscribe та створення по результатах структури субтитрів в srt форматі</h1>
+    <h1>Додаток для розпарсювання результатів обробки тексту з часовими мітками формату XX:XX, XX:XX:XX або X:XX:XX та створення по результатах структури субтитрів в формати субтитрів (sbv, srt)</h1>
     <form class="form">
         <textarea name="" placeholder="введіть текст з часовими мітками" id="" cols="30" rows="10" class="js-textarea-input"></textarea>
             <label class="form__format-choice  sbv">
@@ -20,11 +20,15 @@
                 <input type="radio" name="format" class="js-choose-srt-format">
             </label>
             <p class="method-description js-method-description">Оберіть формат субтитрів</p>
-        <button type="button" class="form__button js-button">
+        <button type="button" class="form__button js-button-start">
             згенерувати
         </button>
+
+        <button type="button" class="form__button js-button-copy">
+            копіювати
+        </button>
     </form>
-    <div class="textarea-output js-textarea-output">поле згенерованого srt</div>
+    <div class="textarea-output js-textarea-output">поле згенерованих субтитрів</div>
     <script src="parser.js" type="module"></script>
 </body>
 </html>
