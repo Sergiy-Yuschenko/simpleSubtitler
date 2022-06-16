@@ -21,6 +21,8 @@ const buttonEl = document.querySelector('.js-button-start');
 //Чіпляємо слухач на кнопку генерації
 buttonEl.addEventListener('click', generateSub);//parseEnteredText
 
+const buttonCopyEl = document.querySelector('.js-button-copy'); //Знаходимо елемент кнопки копіювання
+buttonCopyEl.disabled = 'true';//Додаємо атрибут "disabled" до кнопки копіювання
 
 //Знаходимо елемент текстової області для вводу тексту з часовими мітками
 const textareaInputEl = document.querySelector('.js-textarea-input');
@@ -287,11 +289,11 @@ function generateSub() {
     textareaOutputEl.textContent = subtitleContainer; //отриманий текст структури субтитрів з контейнера для зберігання субтитрів додаємо як контент в елемент для виводу тексту з внутрішньою структурою субтитрів для відображення на сторінці
     // console.log(dataСontainer.charCodeAt(0));
     buttonCopyEl.textContent = 'копіювати'; //міняємо текстовий контент кнопки копіювання на "копіювати" 
-  })
+}
     if (buttonCopyEl.disabled) { //якщо в елемента кнопки копіювання додано атрибут "disabled"
         buttonCopyEl.removeAttribute('disabled'); //видаляємо його
     }
-}
+
 
 const choseSbvEl = document.querySelector('.js-choose-sbv-format');  //Знаходимо радіокнопку для вибору методу генерації sbv формату
 const addSbvMark = () => { //Функція яка додає значення "sbv"  в перемикач методів
@@ -306,10 +308,6 @@ const addSrtMark = () => { ////Функція яка додає значення
 choseSrtEl.addEventListener('change', addSrtMark); //чіпляємо слухач на радіокнопку для вибору методу генерації sbv формату, який при виборі цієї кнопки виконує функцію по додаванню значення "srt"  в перемикача методів
 
 /*-------Додавання в буфер обміну----------*/
-
-
-const buttonCopyEl = document.querySelector('.js-button-copy'); //Знаходимо елемент кнопки копіювання
-buttonCopyEl.disabled = 'true';//Додаємо атрибут "disabled" до кнопки копіювання
 
 buttonCopyEl.addEventListener('click', () => {navigator.clipboard.writeText(subtitleContainer) //Чіпляємо слухач на кнопку копіювання, який виконує функцію копіювання тексту згенерованих субтитрів в буфер обміну
   .then(() => {
