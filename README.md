@@ -1,4 +1,4 @@
-# otranscribe-to-srt-parse
+## Web tools to generate subtitles from text with placed time tags
 Додаток для генерації субтитрів до відео, текст яких розмічений мітками за допомогою системи oTranscribe.
 Текст формату:
 
