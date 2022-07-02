@@ -1,5 +1,6 @@
-## Web tools to generate subtitles from text with placed time tags
-Додаток для генерації субтитрів до відео, текст яких розмічений мітками за допомогою системи oTranscribe.
+# Web tools to generate subtitles from text with placed time tags
+A simple web application that creates SRT or SBV subtitles from time-stamped text. Time-stamped source text can be obtained, for example, by transcribing the video using the oTranscribe web tool. The resulting subtitle structure can be copied and saved to a file with the appropriate extension.
+## Instruction
 Текст формату:
 
   01:48:41 This is how it's done.01:48:43
