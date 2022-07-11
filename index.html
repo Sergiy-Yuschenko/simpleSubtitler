@@ -9,12 +9,15 @@
     <title>Генератор субтитрів із тексту з часовими мітками</title>
 </head>
 <body>
-    <div class="wrapper">
-        <h1 class="title">Додаток для розпарсювання результатів обробки тексту з часовими мітками формату XX:XX, XX:XX:XX або X:XX:XX та
-            створення по результатах структури субтитрів в формати субтитрів (sbv, srt)</h1>
+    <header class="header container"></header>
+    <div class="wrapper container">
+        <h1 class="title">EasySubtitler</h1>
+        <p class="description">Додаток для генерації субтитрів із тексту з розставленими часовими мітками</p>
+        <p class="description"> текст має містити часові мітками формату XX:XX, XX:XX:XX або X:XX:XX.</p>
+        <p class="description">Даний додаток може генерувати субтитриформату субтитрів (sbv, srt)</p>
         <form class="form">
             <textarea name="" placeholder="введіть текст з часовими мітками" id="" cols="30" rows="10"
-                class="js-textarea-input"></textarea>
+                class="textarea-input js-textarea-input"></textarea>
                                 <p class="method-description js-method-description">Оберіть формат субтитрів:</p>
             <div class="form__choice-wrapper">
 
@@ -30,12 +33,12 @@
             <div class="form__button-choice">
                 <div>
                     <button type="button" class="form__button js-button-start">
-                        згенерувати
+                        Generate
                     </button>
                 </div>
                 <div>
                     <button type="button" class="form__button js-button-copy">
-                        копіювати
+                        Copy
                     </button>
                 </div>
             </div>

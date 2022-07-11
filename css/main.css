@@ -1,5 +1,6 @@
 * {
   box-sizing: border-box;
+  /* outline: #f66 solid 1px; */
 }
 
 body {
@@ -36,11 +37,18 @@ p {
 .wrapper {
   width: 100%;
   padding: 5px;
+  background-color: #f5f8f7;
 }
 
 .title {
   font-size: 15px;
   margin-bottom: 10px;
+  text-align: center;
+}
+
+.description {
+    font-size: 12px;
+    /* margin-bottom: 12px; */
 }
 
 .form {
@@ -60,10 +68,16 @@ p {
 }
 
 
+.textarea-input {
+    background-color: #f5f9fc;
+    border: 2px solid #000000;
+    padding: 10px;
+}
+
 .textarea-output {
   width: 1000px;
   height: 150px;
-  background-color: #f0f8ff;
+  background-color: #f6fafd;
   border: 2px solid #000000;
   margin: 0 auto;
   padding: 10px;
@@ -74,18 +88,20 @@ p {
 .form__button {
   width: 100px;
   outline: none;
-  background-color: #e9f2ef;
-  border-color: #80a6ac;
+  background-color: #dbeaf0;
+  border-color: #8bb0e7;
   border-radius: 4px;
   font-size: 15px;
   max-width: 130px;
   margin: 7px auto 9px auto;
 }
-
+/* .form__button-choice {
+  jhb
+} */
 .form__button:hover,
 .form__button:focus {
-  border-color: #f3f0c3;
-  background-color: #80a6ac;
+  border-color: #dbd9d9;
+  background-color: #748e92;
   color: #ffffff;
 }
 
@@ -98,13 +114,73 @@ p {
   width: 100%;
 }
 
-@media screen and (min-width: 440px) {
+@media screen and (min-width: 340px) {
+  .wrapper {
+      padding: 20px;
+    }
   .form__button-choice {
     display: flex;
-    justify-content: center;
+    justify-content: space-around;
+    margin: 0 auto;
+    width: 240px;
   }
   .form__button {
-    margin: 0 0 12px 0;
+    margin: 12px 0;
+  }
+    /* .form__button:not(:last-child) {
+      margin-right: 10px;
+    } */
+  .title {
+    font-size: 18px;
+    margin-bottom: 15px;
+  }
+  .description {
+    font-size: 15px;
+    /* margin-bottom: 3px; */
+  }
+}
+
+
+
+@media screen and (min-width: 500px) {
+  .wrapper {
+      padding: 30px;
+    }
+  
+  .form__button-choice {
+
+    /* margin: 0 auto; */
+    width: 380px;
+  }
+
+  .form__button {
+    margin: 12px 0;
+  }
+
+  /* .form__button:not(:last-child) {
+      margin-right: 10px;
+    } */
+  .title {
+    font-size: 30px;
+    /* margin-bottom: 15px; */
+  }
+
+  .description {
+    font-size: 18px;
+    /* margin-bottom: 15px; */
+  }
+}
+
+@media screen and (min-width: 690px) {
+  .wrapper {
+      width: 670px;
+      margin: 0 auto;
+  }
+}
+
+@media screen and (min-width: 775px) {
+  .wrapper {
+    width: 776px;
   }
 }
 
