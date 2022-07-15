@@ -40,13 +40,20 @@ p {
 .container {
   width: 100%;
   padding: 5px;
-  background-color: #f5f8f7;
 }
 
 .header {
-  background-color: #000000;
+    background-color: #000000;
+}
+
+.header .container {
   display: flex;
   padding: 13px 15px;
+  background-color: transparent;
+}
+
+.main {
+  background-color: #f5f8f7;
 }
 
 .logo {
@@ -65,9 +72,19 @@ p {
 
 .site-nav__element {
   color: #e2e1e1;
-  background-color: #616161;
+ 
   padding: 3px 5px 0 5px;
   width:auto;
+  height: 30px;
+}
+
+.site-nav__element:hover,
+.site-nav__element:active {
+  background-color: #616161;
+}
+
+.language {
+  cursor: pointer;
 }
 
 .title {
@@ -78,8 +95,22 @@ p {
 
 .description {
     font-size: 12px;
+    margin-bottom: 15px;
     /* margin-bottom: 12px; */
+    text-align:justify;
 }
+
+.description-box {
+  background-color: #ececeb;
+  /* margin: 0 25px 15px 25px; */
+  padding:5px 25px;
+  width: auto;
+  overflow: auto;
+}
+
+/* .method-description {
+  font-size: 13px;
+} */
 
 .form {
   display: flex;
@@ -99,12 +130,18 @@ p {
 
 
 .textarea-input {
+    font-family: system-ui;
+    font-size: 15px;
     background-color: #f5f9fc;
     border: 2px solid #000000;
     padding: 10px;
+    height: 150px;
+    resize: none;
 }
 
 .textarea-output {
+  font-family: system-ui;
+  font-size: 15px;
   width: 1000px;
   height: 150px;
   background-color: #f6fafd;
@@ -149,9 +186,9 @@ p {
       padding: 20px;
     }
 
-.logo {
-  font-size: 24px;
-}
+  .logo {
+    font-size: 24px;
+  }
 
   .form__button-choice {
     display: flex;
@@ -159,6 +196,8 @@ p {
     margin: 0 auto;
     width: 240px;
   }
+
+
   .form__button {
     margin: 12px 0;
   }
@@ -175,9 +214,29 @@ p {
   }
 }
 
+@media screen and (max-width: 399px) {
+  .header {
+    padding: 5px 15px;
+  }
+  .method-description {
+    font-size: 13px;
+  }
+  .form__button {
+    display: flex;
+  }
+  .form__button-wrapper {
+    display: flex;
+    margin: 0 auto;
+  }
+  .site-nav__element {
+    font-size: 14px;
+  }
+}
+
 @media screen and (min-width: 400px) {
   .site-nav {
       display: flex;
+      margin-top: 4px;
     }
   .site-nav__element:not(:first-child) {
     margin-left: 5px;
@@ -212,7 +271,7 @@ p {
   }
 
   .description {
-    font-size: 18px;
+    font-size: 15px;
     /* margin-bottom: 15px; */
   }
 }
@@ -225,6 +284,9 @@ p {
   .title {
     font-size: 25px;
     /* margin-bottom: 15px; */
+  }
+  .description-box {
+    margin: 0 25px 15px 25px;
   }
 }
 

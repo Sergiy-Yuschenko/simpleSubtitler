@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge"> -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="./css/main.css">
+    <title>Генератор субтитрів із тексту з часовими мітками</title>
+</head>
+
+<body>
+    <header class="header">
+        <div class="container">
+            <a href="./" class="logo link"><span class="logo-first">simple</span><span>Subtitler</span></a>
+            <nav class="site-nav">
+                <a href="./" class="link site-nav__link" rel="noreferrer noopener">
+                    <p class="site-nav__element">На головну</p>
+                </a>
+                <div class="site-nav__element language language-js"><span>Українська</span></div>
+            </nav>
+        </div>
+    </header>
+    <main class="main">
+        <div class="wrapper container">
+            <h1 class="title">simpleSubtitler Інструкція</h1>
+            <p class="description">
+                simpleSubtitler це простий веб-додаток, який створює SRT або SBV субтитри субтирів з тексту промаркованого
+                часовими мітками.
+                Вихідний текст із промаркований часовими мітками можна, наприклад, набрати вручну, транскрибуючи відео та
+                розставити часові
+                мітки за допомогою веб-інструменту oTranscribe або скопіювавши текстову версію відео в Ютубі.
+            </p>
+            <p class="description"> Вихідний текст має містити часові мітками формату X:XX, XX:XX, XX:XX:XX або X:XX:XX,
+                наприклад:</p>
+            <pre class="description-box">
+01:48:41 This is how it's done.01:48:43
+01:48:46 When people are sittin' on shit that you want,
+01:48:48 you make 'em your enemy.
+01:48:50 Then you're justified in taking it. 01:48:53</pre>
+            <p class="description">
+                або:
+            </p>
+            <pre class="description-box">
+1:48:41 This is how it's done.1:48:43
+1:48:46 When people are sittin' on shit that you want,
+1:48:48 you make 'em your enemy.
+1:48:50 Then you're justified in taking it. 1:48:53</pre>
+            <p class="description">
+                вставте в текстове поле форми, виберіть формат субтитрів і натисніть кнопку «Створити». У нижньому полі
+                відображається
+                результат, який можна перевірити
+            </p>
+            <p class="description">
+                Наприклад для формату SBV:
+            </p>
+            <pre class="description-box">
+1:48:41.000,1:48:43.000
+This is how it's done.
+
+1:48:46.000,1:48:48.000
+When people are sittin' on shіt that you want,
+
+1:48:48.000,1:48:50.000
+you make 'em your enemy.
+
+1:48:50.000,1:48:53.000
+Then you're justified in taking it.</pre>
+            <p class="description">
+                або для формату SRT:
+            </p>
+            <pre class="description-box">
+1
+01:48:41,000 --> 01:48:43,000
+This is how it's done.
+
+2
+01:48:46,000 --> 01:48:48,000
+When people are sittin' on shit that you want,
+
+3
+01:48:48,000 --> 01:48:50,000
+you make 'em your enemy.
+
+4
+01:48:50,000 --> 01:48:53,000
+Then you're justified in taking it.</pre>
+            <p class="description">
+                Отриману структуру субтитрів можна скопіювати та зберегти за допомогою простого текстового редактора у файлі з
+                відповідним розширенням ("назва файлу".sbv або "назва файлу".srt).
+            </p>
+        </div>
+    </main>
+    <script src="parser.js" type="module"></script>
+</body>
+
+</html>

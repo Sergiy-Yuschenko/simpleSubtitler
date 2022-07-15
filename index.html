@@ -9,49 +9,52 @@
     <title>Генератор субтитрів із тексту з часовими мітками</title>
 </head>
 <body>
-    <header class="header container">
-        <a href="./" class="logo link"><span class="logo-first">simple</span><span>Subtitler</span></a>
-        <nav class="site-nav">
-            <a href="./" class="link site-nav__link"><p class="site-nav__element">Інструкція</p></a>
-            <div class="site-nav__element"><span>Українська</span></div>
-        </nav>
-        
-        
+    <header class="header">
+        <div  class="container">
+            <a href="./" class="logo link"><span class="logo-first">simple</span><span>Subtitler</span></a>
+            <nav class="site-nav">
+                <a href="./instruction.html" class="link site-nav__link" target="_blank" rel="noreferrer noopener">
+                    <p class="site-nav__element">Інструкція</p>
+                </a>
+                <div class="site-nav__element language language-js"><span>Українська</span></div>
+            </nav>
+        </div>  
     </header>
-    <div class="wrapper container">
-        <h1 class="title">Додаток для генерації субтитрів із тексту з розставленими часовими мітками</h1>
-        <!-- <p class="description"> текст має містити часові мітками формату XX:XX, XX:XX:XX або X:XX:XX.</p>
-        <p class="description">Даний додаток може генерувати субтитриформату субтитрів (sbv, srt)</p> -->
-        <form class="form">
-            <textarea name="" placeholder="введіть текст з часовими мітками" id="" cols="30" rows="10"
-                class="textarea-input js-textarea-input"></textarea>
-                                <p class="method-description js-method-description">Оберіть формат субтитрів:</p>
-            <div class="form__choice-wrapper">
-
-                <label class="form__format-choice  sbv">
-                    SBV
-                    <input type="radio" name="format" checked class="js-choose-sbv-format">
-                </label>
-                <label class="form__format-choice  srt">
-                    SRT
-                    <input type="radio" name="format" class="js-choose-srt-format">
-                </label>
-            </div>
-            <div class="form__button-choice">
-                <div>
-                    <button type="button" class="form__button js-button-start">
-                        Generate
-                    </button>
+    <main class="main">
+        <div class="wrapper container">
+            <h1 class="title">Додаток для генерації субтитрів із тексту з розставленими часовими мітками</h1>
+            <form class="form">
+                <textarea name="" placeholder="введіть текст з часовими мітками" id="" cols="30" rows="10"
+                    class="textarea-input js-textarea-input"></textarea>
+                <p class="method-description js-method-description">Оберіть формат субтитрів:</p>
+                <div class="form__choice-wrapper">
+        
+                    <label class="form__format-choice  sbv">
+                        SBV
+                        <input type="radio" name="format" checked class="js-choose-sbv-format">
+                    </label>
+                    <label class="form__format-choice  srt">
+                        SRT
+                        <input type="radio" name="format" class="js-choose-srt-format">
+                    </label>
                 </div>
-                <div>
-                    <button type="button" class="form__button js-button-copy">
-                        Copy
-                    </button>
+                <div class="form__button-choice">
+                    <div class="form__button-wrapper">
+                        <button type="button" class="form__button js-button-start">
+                            Generate
+                        </button>
+                    </div>
+                    <div class="form__button-wrapper">
+                        <button type="button" class="form__button js-button-copy">
+                            Copy
+                        </button>
+                    </div>
                 </div>
-            </div>
-        </form>
-        <div class="textarea-output js-textarea-output">поле згенерованих субтитрів</div>
-    </div>
+            </form>
+            <div class="textarea-output js-textarea-output">поле згенерованих субтитрів</div>
+        </div>
+    </main>
+ 
     <script src="parser.js" type="module"></script>
 </body>
 </html>
