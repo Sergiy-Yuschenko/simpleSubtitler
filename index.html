@@ -13,7 +13,7 @@
         <div  class="container">
             <a href="./" class="logo link"><span class="logo-first">simple</span><span>Subtitler</span></a>
             <nav class="site-nav">
-                <a href="./instruction.html" class="link site-nav__link" target="_blank" rel="noreferrer noopener">
+                <a href="./instruction.html" class="link site-nav__link">
                     <p class="site-nav__element">Інструкція</p>
                 </a>
                 <div class="site-nav__element language language-js"><span>Українська</span></div>
@@ -26,17 +26,19 @@
             <form class="form">
                 <textarea name="" placeholder="введіть текст з часовими мітками" id="" cols="30" rows="10"
                     class="textarea-input js-textarea-input"></textarea>
-                <p class="method-description js-method-description">Оберіть формат субтитрів:</p>
-                <div class="form__choice-wrapper">
-        
-                    <label class="form__format-choice  sbv">
-                        SBV
-                        <input type="radio" name="format" checked class="js-choose-sbv-format">
-                    </label>
-                    <label class="form__format-choice  srt">
-                        SRT
-                        <input type="radio" name="format" class="js-choose-srt-format">
-                    </label>
+                <div class="form__method-wrapper">
+                    <p class="form__format-description js-method-description">Оберіть формат субтитрів:</p>
+                    <div class="form__choice-wrapper">
+                    
+                        <label class="form__format-choice  sbv">
+                            SBV
+                            <input type="radio" name="format" checked class="js-choose-sbv-format">
+                        </label>
+                        <label class="form__format-choice  srt">
+                            SRT
+                            <input type="radio" name="format" class="js-choose-srt-format">
+                        </label>
+                    </div>
                 </div>
                 <div class="form__button-choice">
                     <div class="form__button-wrapper">

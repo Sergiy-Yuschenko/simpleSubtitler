@@ -1,11 +1,10 @@
+/*===================== General parameters =====================*/
 * {
   box-sizing: border-box;
-  /* outline: #f66 solid 1px; */
 }
 
 body {
   font-family: sans-serif;
-  /* background-color: #cad3d3; */
   color: #212121;
   line-height: 1.5;
 }
@@ -24,11 +23,6 @@ h6 {
   margin: 0;
 }
 
-/* .list {
-  padding: 0;
-  list-style: none;
-} */
-
 p {
   margin: 0;
 }
@@ -37,25 +31,32 @@ p {
   text-decoration: none;
 }
 
-.container {
-  width: 100%;
-  padding: 5px;
+.main {
+  background-color: #fcfcfc;
 }
 
+.container {
+  width: 100%;
+  padding-left:15px;
+  padding-right: 15px;
+}
+
+/*===================== General parameters END =====================*/
+
+/*===================== HEADER =====================*/
+
 .header {
-    background-color: #000000;
+  background-color: #3f3f3f;
 }
 
 .header .container {
   display: flex;
-  padding: 13px 15px;
-  background-color: transparent;
+  padding-top: 13px;
+  padding-bottom: 13px;
+  background-color: #000000;
 }
 
-.main {
-  background-color: #f5f8f7;
-}
-
+/*logo*/
 .logo {
   color: #e2e2e1;
   font-size: 20px;
@@ -66,15 +67,16 @@ p {
   color: #66d4f5;
 }
 
+/* Site - navigation */
 .site-nav {
   margin-left: auto;
 }
 
 .site-nav__element {
   color: #e2e1e1;
- 
+
   padding: 3px 5px 0 5px;
-  width:auto;
+  width: auto;
   height: 30px;
 }
 
@@ -87,27 +89,21 @@ p {
   cursor: pointer;
 }
 
-.title {
-  font-size: 15px;
-  margin-bottom: 10px;
-  text-align: center;
+/*===================== HEADER END =====================*/
+
+/*===================== MAIN =====================*/
+
+
+.wrapper {
+  background-color: #f0f6f3;
+  /* background-color: #fcfcfc; */
+    padding-top: 12px;
+    padding-bottom: 12px;
 }
 
-.description {
-    font-size: 12px;
-    margin-bottom: 15px;
-    /* margin-bottom: 12px; */
-    text-align:justify;
-}
+/*===================== MAIN END =====================*/
 
-.description-box {
-  background-color: #ececeb;
-  /* margin: 0 25px 15px 25px; */
-  padding:5px 25px;
-  width: auto;
-  overflow: auto;
-}
-
+/*===================== MAIN FORM =====================*/
 /* .method-description {
   font-size: 13px;
 } */
@@ -117,6 +113,11 @@ p {
   flex-direction: column;
   width: 100%;
   margin: 0 auto;
+}
+
+.form__method-wrapper {
+  display: flex;
+  flex-direction: column;
 }
 
 .form__choice-wrapper {
@@ -130,21 +131,22 @@ p {
 
 
 .textarea-input {
-    font-family: system-ui;
-    font-size: 15px;
-    background-color: #f5f9fc;
-    border: 2px solid #000000;
-    padding: 10px;
-    height: 150px;
-    resize: none;
+  font-family: system-ui;
+  font-size: 15px;
+  background-color: #f4fafa;
+  border: 2px solid #202020;
+  margin-bottom: 5px;
+  padding: 10px;
+  height: 150px;
+  resize: none;
 }
 
 .textarea-output {
   font-family: system-ui;
   font-size: 15px;
-  width: 1000px;
+  width: 100%;
   height: 150px;
-  background-color: #f6fafd;
+  background-color: #f4fafa;
   border: 2px solid #000000;
   margin: 0 auto;
   padding: 10px;
@@ -162,6 +164,7 @@ p {
   max-width: 130px;
   margin: 7px auto 9px auto;
 }
+
 /* .form__button-choice {
   jhb
 } */
@@ -176,14 +179,40 @@ p {
 .form__button:active {
   background-color: #eb8b1e;
 }
+/*===================== MAIN FORM END =====================*/
 
-.textarea-output {
-  width: 100%;
+/*===================== TEXT COMPONENTS =====================*/
+
+.title {
+  font-size: 15px;
+  margin-bottom: 10px;
+  text-align: center;
 }
 
+.description {
+  font-size: 12px;
+  margin-bottom: 15px;
+  /* margin-bottom: 12px; */
+  text-align: justify;
+}
+
+.description-box {
+  background-color: #ececeb;
+  /* margin: 0 25px 15px 25px; */
+  padding: 5px 25px;
+  width: auto;
+  overflow: auto;
+}
+
+/*===================== TEXT COMPONENTS END =====================*/
+
+
+
+
 @media screen and (min-width: 340px) {
-  .wrapper {
-      padding: 20px;
+  .container {
+      padding-left: 20px;
+      padding-right: 20px;
     }
 
   .logo {
@@ -206,6 +235,7 @@ p {
     } */
   .title {
     font-size: 18px;
+    /* margin-top: 15px; */
     margin-bottom: 15px;
   }
   .description {
@@ -215,10 +245,10 @@ p {
 }
 
 @media screen and (max-width: 399px) {
-  .header {
+  /* .header {
     padding: 5px 15px;
-  }
-  .method-description {
+  } */
+  .form__format-description {
     font-size: 13px;
   }
   .form__button {
@@ -241,21 +271,38 @@ p {
   .site-nav__element:not(:first-child) {
     margin-left: 5px;
   }
+  .form__format-description {
+    padding: 5px;
+  }
 }
 
 @media screen and (min-width: 500px) {
-  .wrapper {
-      padding: 30px;
+  .container {
+      padding-left: 30px;
+      padding-right: 30px;
     }
 
   .site-nav {
     display: flex;
   }
-  
+
+  .form__method-wrapper {
+    flex-direction: row;
+  }
+
+  .form__choice-wrapper {
+    margin: 0 auto 0 25px;
+  }
+
   .form__button-choice {
 
     /* margin: 0 auto; */
     width: 380px;
+  }
+
+  .textarea-input,
+  .textarea-output {
+    height: 200px;
   }
 
   .form__button {
@@ -276,9 +323,17 @@ p {
   }
 }
 
+@media screen and (min-width: 642px) and (max-width: 689px) {
+  .form__choice-wrapper {
+    margin-left: auto;
+    margin-right: calc((100vw / 2) - 105px);
+  }
+  
+}
+
 @media screen and (min-width: 690px) {
   .container {
-      width: 670px;
+      width: 690px;
       margin: 0 auto;
   }
   .title {
@@ -288,13 +343,55 @@ p {
   .description-box {
     margin: 0 25px 15px 25px;
   }
+  .textarea-input,
+  .textarea-output {
+    height: 250px;
+  }
+  .form__choice-wrapper {
+    margin-left: auto;
+    margin-right: calc((100vw / 2) - 105px - ((100vw - 690px)/2));
+  }
 }
 
-@media screen and (min-width: 775px) {
+@media screen and (min-width: 775px){
   .container {
     width: 776px;
   }
+  .form__choice-wrapper {
+    /* margin-left: auto; */
+    margin-right: calc((100vw / 2) - 105px - ((100vw - 775px)/2));
+  }
 }
+
+@media screen and (min-width: 1000px) {
+  /* .wrapper {
+      padding: 30px 0;
+    } */
+  .container {
+    width: 1000px;
+  }
+  .form__choice-wrapper {
+    /* margin-left: auto; */
+    margin-right: calc((100vw / 2) - 105px - ((100vw - 999px)/2));
+  }
+  .logo {
+    font-size: 30px;
+  }
+  .title {
+    font-size: 30px;
+  }
+  .description {
+    font-size: 20px;
+  }
+  .description-box {
+    font-size: 15px;
+  }
+  .site-nav__element {
+    font-size: 20px;
+  }
+}
+
+
 
 
 
