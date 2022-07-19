@@ -241,7 +241,7 @@ function generateSBV() {
             firstTimestamp = `0:${firstTimestamp}`;  //додаємо на початку "0:"
         } else if (firstTimestamp.length === 8) { //якщо часова мітка має 8 символів, перевіряємо перший символ, і якщо це нуль - відкидаємо його
             if (firstTimestamp.charCodeAt(0) ===  48) { //якщо першим символом є нуль
-                for (let i = 1; i < firstTimestamp.length - 1; i += 1) { //перебираємо циклом символи часової мітки від другого до останнього і викопійовуємо їх
+                for (let i = 1; i < firstTimestamp.length; i += 1) { //перебираємо циклом символи часової мітки від другого до останнього і викопійовуємо їх
                     if (i === 1) { //якщо це другий символ, 
                         currentTimestamp = firstTimestamp[i]; //копіюємо його до контейнеру для зберігання поточної часової мітки
                     } else { //в інших варіантах
@@ -256,7 +256,7 @@ function generateSBV() {
             secondTimestamp = `0:${secondTimestamp}`; // додаємо на початку "0:"
         } else if (secondTimestamp.length === 8) { //якщо часова мітка має 8 символів, перевіряємо перший символ, і якщо це нуль - відкидаємо його
             if (secondTimestamp.charCodeAt(0) === 48) { //якщо першим символом є нуль
-                for (let i = 1; i < secondTimestamp.length - 1; i += 1) { //перебираємо циклом символи часової мітки від другого до останнього і викопійовуємо їх
+                for (let i = 1; i < secondTimestamp.length; i += 1) { //перебираємо циклом символи часової мітки від другого до останнього і викопійовуємо їх
                     if (i === 1) { //якщо це другий символ, 
                         currentTimestamp = secondTimestamp[i]; //копіюємо його до контейнеру для зберігання поточної часової мітки
                     } else {
@@ -278,6 +278,7 @@ function generateSBV() {
 //Функція для виконання генерації субтитрів
 function generateSub() {
     parseEnteredText(); // виконуємо фунцію для розпарсювання введеного тексту
+    // console.log(scatteredDataArray);
     if (MethodSwitch === 'sbv') { //Якщо значення перемикача методів "sbv"
         generateSBV(); //виконуємо функцію для генерації структури SBV - файлу
     } else if (MethodSwitch === 'srt') { //Якщо значення перемикача методів "srt"
