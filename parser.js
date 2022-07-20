@@ -131,9 +131,10 @@ function parseEnteredText() {
             }
             timestampType = null; //Прибираємо значення типу часової мітки в контейнер для зберігання поточної часової мітки
         }
-        if (secondTimestamp && copyTextOn) { //якщо немає кінцевої часової мітки, то береться з першої часової мітки наступного
+        if (secondTimestamp && !firstTimestamp && copyTextOn) { //Якщо змінна другої часової мітки заповнена, а першої - пуста і при цьому ввімкнутий перемикач зчитування символів, то береться з першої часової мітки наступного
+
             //рядка, відповідно потрібно продублювати цю вже забрану мітку як першу мітку наступного рядка, щоб не було помилки
-            firstTimestamp = secondTimestamp;
+                    firstTimestamp = secondTimestamp;
         }
 
         if (currentTimestamp) { //Якщо контейнер для зберігання поточної часової мітки заповнений
@@ -144,7 +145,7 @@ function parseEnteredText() {
             if (subtitleTextContainer) { // а якщо при цьому контейнер для проміжного зберігання тексту субтитрів заповнений
                 secondTimestamp = currentTimestamp; //контейнеру для зберігання часової мітки  кінця тексту субтитра присвоюємо значення контейнера для зберігання поточної часової мітки
                 subtitleTextContainer = normalizeСurrentTextContainerData(subtitleTextContainer); //Видаляємо зайві пробіли та переноси з тексу субтитрів за рахунок функції для нормалізації вмісту контейнеру для проміжного зберігання тексту субтитрів
-                сreatingArrayWithData(firstTimestamp, secondTimestamp, subtitleTextContainer); //Отримані часові мітки та текст субтитра додаємо в масив за допомогою функції для додавання даних по субтитрах в масив 
+                сreatingArrayWithData(firstTimestamp, secondTimestamp, subtitleTextContainer); //Отримані часові мітки та текст субтитра додаємо в масив за допомогою функції для додавання даних по субтитрах в масив
                 currentTimestamp = null; //очищуємо контейнера для зберігання поточної часової мітки 
                 firstTimestamp = null; // очищуємо контейнер для зберігання часової мітки початку тексту субтитра
                 subtitleTextContainer = null; // очищуємо контейнер для проміжного зберігання тексту субтитрів
