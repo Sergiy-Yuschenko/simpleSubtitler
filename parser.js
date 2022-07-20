@@ -37,7 +37,7 @@ function copyTextFromTextarea(element) {
     dataСontainer = element.target.value;
 }
 
-//Функція для визначення типу часової мітки 1 - якщо формат XX:XX, 2 - якщо формат XX:XX:XX, 3 - якщо формат  X:XX:XX
+//Функція для визначення типу часової мітки 1 - якщо формат XX:XX, 2 - якщо формат XX:XX:XX, 3 - якщо формат  X:XX, 4 - якщо формат  X:XX:XX
 function timestampTypeDetermination(i) {
     if (dataСontainer.charCodeAt(i) >= 48 && dataСontainer.charCodeAt(i) <= 57) {
         if (dataСontainer.charCodeAt(i+1) >= 48 && dataСontainer.charCodeAt(i+1) <= 57) {
@@ -61,10 +61,11 @@ function timestampTypeDetermination(i) {
         if (dataСontainer.charCodeAt(i + 1) === 58) {
             if (dataСontainer.charCodeAt(i + 2) >= 48 && dataСontainer.charCodeAt(i + 2) <= 57) {
                 if (dataСontainer.charCodeAt(i + 3) >= 48 && dataСontainer.charCodeAt(i + 3) <= 57) {
+                        timestampType = 3; //якщо формат типу X:XX
                     if (dataСontainer.charCodeAt(i + 4) === 58) {
                         if (dataСontainer.charCodeAt(i + 5) >= 48 && dataСontainer.charCodeAt(i + 5) <= 57) {
                             if (dataСontainer.charCodeAt(i + 6) >= 48 && dataСontainer.charCodeAt(i + 6) <= 57) {
-                                timestampType = 3; //якщо формат типу X:XX:XX
+                                timestampType = 4; //якщо формат типу X:XX:XX
                             }
                         }
                     }
@@ -108,6 +109,9 @@ function parseEnteredText() {
                 stepLength = 8;
                 break;
             case 3:
+                stepLength = 4;
+                break;
+            case 4:
                 stepLength = 7;
                 break;
         }
@@ -210,6 +214,10 @@ function normalizeСurrentTextContainerData(textсontainer) {
 //Функція для генерації структури SRT - файлу
 function generateSRT() {
     scatteredDataArray.forEach(({ firstTimestamp, secondTimestamp, subtitleText }, index) => { //Цикл перебору масиву для розпарсених данних, та генерації текстової структури субтитрів в форматі SRT
+        //Блок для нормалізації типу першої часової мітки з формату X:XX до формату XX:XX
+        if (firstTimestamp.length === 4) {
+            firstTimestamp = `0${firstTimestamp}`;  //додаємо на початку "0:"
+        }
         //Блок для приведення часових міток до формату xx:xx:xx
         switch (firstTimestamp.length) { //першої часової мітки
             case 5: firstTimestamp = `00:${firstTimestamp}`; //якщо довжина часової мітки 5 символів, додаємо на початку "00:"
@@ -217,6 +225,10 @@ function generateSRT() {
             case 7: firstTimestamp = `0${firstTimestamp}`; //якщо довжина часової мітки 7 символів, додаємо на початку "0"
                 break;
              //всі інші варіани (8 символів) лишаємо як є
+        }
+        //Блок для нормалізації типу другої часової мітки з формату X:XX до формату XX:XX
+        if (secondTimestamp.length === 4) {
+            secondTimestamp = `0${secondTimestamp}`;  //додаємо на початку "0:"
         }
         switch (secondTimestamp.length) { //другої часової мітки
             case 5: secondTimestamp = `00:${secondTimestamp}`; //якщо довжина часової мітки 5 символів, додаємо на початку "00:"
@@ -237,6 +249,10 @@ function generateSRT() {
 //Функція для генерації структури SBV - файлу
 function generateSBV() {
     scatteredDataArray.forEach(({ firstTimestamp, secondTimestamp, subtitleText }, index) => { //Цикл перебору масиву для розпарсених данних, та генерації текстової структури субтитрів в форматі SRT
+        //Блок для нормалізації типу першої часової мітки з формату X:XX до формату XX:XX
+        if (firstTimestamp.length === 4) {
+            firstTimestamp = `0${firstTimestamp}`;  //додаємо на початку "0:"
+        }
         //Блок для приведення першої часової мітки до формату x:xx:xx
         if (firstTimestamp.length === 5) { //якщо довжина часової мітки 5 символів,
             firstTimestamp = `0:${firstTimestamp}`;  //додаємо на початку "0:"
@@ -252,6 +268,10 @@ function generateSBV() {
                 firstTimestamp = currentTimestamp; ////замінюємо значення першої часової мітки на варіант згенерований методом перебору
             }
         }  //всі інші варіани (7 символів) лишаємо як є
+        //Блок для нормалізації типу другої часової мітки з формату X:XX до формату XX:XX
+        if (secondTimestamp.length === 4) {
+            secondTimestamp = `0${secondTimestamp}`;  //додаємо на початку "0:"
+        }
         //Блок для приведення другої часової мітки до формату x:xx:xx        
         if (secondTimestamp.length === 5) { //якщо довжина часової мітки 5 символів,
             secondTimestamp = `0:${secondTimestamp}`; // додаємо на початку "0:"
