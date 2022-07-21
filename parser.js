@@ -9,6 +9,7 @@ let subtitleTextContainer; //контейнер для проміжного зб
 let firstTimestamp; //контейнер для зберігання часової мітки початку тексту субтитра
 let secondTimestamp; //контейнер для зберігання часової мітки кінця тексту субтитра
 let currentTimestamp; //контейнер для зберігання поточної часової мітки
+let textTimestamp; //контейнер для зберігання часової мітки яку треба додати до субтитрів як текст
 
 
 let timestampType = null; //змінна яка зберігає тип часової мітки (1 - якщо формат XX:XX, 2 - якщо формат XX:XX:XX, 3 - якщо формат  X:XX:XX)
@@ -92,13 +93,44 @@ function parseEnteredText() {
         if (stepLength !== 1) { //повернення часової мітки до одиниці
             stepLength = 1;
         }
-        
         if (dataСontainer.charCodeAt(i) >= 48 && dataСontainer.charCodeAt(i) <= 57) { //якщо символ є числом - перевірити чи це не часова мітка
             timestampTypeDetermination(i); //визначаємо тип часової мітки за допомогою відповідної функції
         }
 
         if (parseOn === false && timestampType !== 0) { //Якщо знайдена перша часова мітка, 
             parseOn = true; //вмикаємо процес розпарсювання
+        }
+        if (textTimestamp !== null) { //Якщо контейнер для зберігання часової мітки яку треба додати до субтитрів як текст заповнеybq
+            textTimestamp = null; //Обнуляємо його значення
+        }
+
+        //Блок який викопійовує часову мітку, та додає її до тексту субтитрів якщо перед нею стоїть комбінація символів &$
+        if (parseOn === true && dataСontainer.charCodeAt(i) === 38 && dataСontainer.charCodeAt(i + 1) === 36) { //Якщо копіювання тексту увімнуто, поточний символ "&" а наступний символ "$"
+            if (dataСontainer.charCodeAt(i + 2) >= 48 && dataСontainer.charCodeAt(i + 2) <= 57) { //перевіряємо: Якщо другий символ після поточного - число
+                timestampTypeDetermination(i + 2); //визначаємо тип часової мітки за допомогою відповідної функції (якщо це не часова мітка, то тип лишається "null")
+                switch (timestampType) { //Визначеня довжини кроку в залежності від типу часоівої мітки, яка йде за символами &$
+                    case 1:
+                        stepLength = 7;
+                        break;
+                    case 2:
+                        stepLength = 10;
+                        break;
+                    case 3:
+                        stepLength = 6;
+                        break;
+                    case 4:
+                        stepLength = 9;
+                        break;
+                }
+                if (timestampType !== null) { //Якщо значення типу часової мітки не null
+                    textTimestamp = dataСontainer[i + 2]; //в контейнер для зберігання часової мітки додаємо друге значення символу з dataСontainer після поточного
+                    for (let j = i + 3; j < i + stepLength; j = j + 1) { //Цикл який посимвольно викопійовує часову мітку в контейнер для зберігання поточної часової мітки, в залежності від її довжини починаючи з третього символу після поточного
+                        textTimestamp = textTimestamp + dataСontainer[j]; //в контейнер для зберігання часової мітки яку треба додати до тексту субтитрів додаємо другий символ
+                    }
+                    subtitleTextContainer = subtitleTextContainer + textTimestamp;
+                    timestampType = null; //Прибираємо значення типу часової мітки в змінній яка зберігає тип часової мітки
+                }
+            }
         }
 
         switch (timestampType) { //Визначеня довжини кроку в залежності від типу часоівої мітки
@@ -116,7 +148,7 @@ function parseEnteredText() {
                 break;
         }
         // Блок для додавання тексту у контейнер для проміжного зберігання тексту субтитрів
-        if (parseOn === true && timestampType === null) { //Якщо процес розпарсювання увімкнуто та змінна яка зберігає тип часової мітки пуста
+        if (parseOn === true && timestampType === null && textTimestamp === null) { //Якщо процес розпарсювання увімкнуто та змінна яка зберігає тип часової мітки пуста
             if (copyTextOn === true) { //та Якщо вмикач зчитування текстової інформації увімкнуто,
                 subtitleTextContainer = subtitleTextContainer + dataСontainer[i]; //додаваємо символи у контейнер для проміжного зберігання тексту субтитрів
             }
@@ -133,7 +165,7 @@ function parseEnteredText() {
             for (let j = i + 1; j < i + stepLength; j = j + 1) { //Цикл який посимвольно викопійовує часову мітку в контейнер для зберігання поточної часової мітки, в залежності від її довжини
                 currentTimestamp = currentTimestamp + dataСontainer[j];
             }
-            timestampType = null; //Прибираємо значення типу часової мітки в контейнер для зберігання поточної часової мітки
+            timestampType = null; ////Прибираємо значення типу часової мітки в змінній яка зберігає тип часової мітки
         }
         if (secondTimestamp && !firstTimestamp && copyTextOn) { //Якщо змінна другої часової мітки заповнена, а першої - пуста і при цьому ввімкнутий перемикач зчитування символів, то береться з першої часової мітки наступного
 
