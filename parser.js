@@ -9,6 +9,9 @@ let subtitleTextContainer; //контейнер для проміжного зб
 let firstTimestamp; //контейнер для зберігання часової мітки початку тексту субтитра
 let secondTimestamp; //контейнер для зберігання часової мітки кінця тексту субтитра
 let currentTimestamp; //контейнер для зберігання поточної часової мітки
+let firstTimeRemainder = '000'; //контейнер для зберігання залишку першої часової мітки початку тексту субтитра
+let secondTimeRemainder = '000'; //контейнер для зберігання залишку другої часової мітки початку тексту субтитра
+let currentTimeRemainder; //контейнер для зберігання поточного залишку часової мітки 
 let textTimestamp; //контейнер для зберігання часової мітки яку треба додати до субтитрів як текст
 
 
@@ -158,32 +161,49 @@ function parseEnteredText() {
                 subtitleTextContainer = dataСontainer[i]; //в контейнер для проміжного зберігання тексту субтитрів додаємо поточне значення символу введеного тексту, як перший символ контейнеру
             }
         }
-
-        if (parseOn === true && timestampType !== null) { // Блок для додавання часової мітки 
+         // Блок для додавання часової мітки 
+        if (parseOn === true && timestampType !== null) {
             currentTimestamp = dataСontainer[i]; // в контейнер для зберігання поточної часової мітки додаємо значення поточного символу з введеного тексту,
             // як першого символу часової мітки
             for (let j = i + 1; j < i + stepLength; j = j + 1) { //Цикл який посимвольно викопійовує часову мітку в контейнер для зберігання поточної часової мітки, в залежності від її довжини
                 currentTimestamp = currentTimestamp + dataСontainer[j];
+            }
+             // Підблок для додавання залишку часової мітки 
+            if (dataСontainer.charCodeAt(i + stepLength) === 46) {//Перевірка наявності залишку: якщо перший символ після часової мітки "."
+                if (dataСontainer.charCodeAt(i + stepLength + 1) >= 48 && dataСontainer.charCodeAt(i + stepLength + 1) <= 57) {//якщо другий символ після часової мітки - число
+                    if (dataСontainer.charCodeAt(i + stepLength + 2) >= 48 && dataСontainer.charCodeAt(i + stepLength + 2) <= 57) { //якщо третій символ після часової мітки - число
+                        if (dataСontainer.charCodeAt(i + stepLength + 3) >= 48 && dataСontainer.charCodeAt(i + stepLength + 3) <= 57) { //якщо четвертий символ після часової мітки - число
+                            currentTimeRemainder = `${dataСontainer[i + stepLength + 1]}${dataСontainer[i + stepLength + 2]}${dataСontainer[i + stepLength + 3]}`; // в контейнер для зберігання поточного залишку часової мітки додаємо значення другого, третього та четвертого символа після часової мітки
+                        }
+                        stepLength = stepLength + 4; //Збільшуємо довжину кроку циклу на чотири одиниці
+                    }
+                }
             }
             timestampType = null; ////Прибираємо значення типу часової мітки в змінній яка зберігає тип часової мітки
         }
         if (secondTimestamp && !firstTimestamp && copyTextOn) { //Якщо змінна другої часової мітки заповнена, а першої - пуста і при цьому ввімкнутий перемикач зчитування символів, то береться з першої часової мітки наступного
 
             //рядка, відповідно потрібно продублювати цю вже забрану мітку як першу мітку наступного рядка, щоб не було помилки
-                    firstTimestamp = secondTimestamp;
+            firstTimestamp = secondTimestamp;
+            firstTimeRemainder = secondTimeRemainder; // Те саме робимо і з залишками часових міток
         }
 
         if (currentTimestamp) { //Якщо контейнер для зберігання поточної часової мітки заповнений
             if (!subtitleTextContainer) { // і при цьому контейнер для проміжного зберігання тексту субтитрів пустий
                 firstTimestamp = currentTimestamp; //контейнеру для зберігання часової мітки початку тексту субтитра присвоюємо значення контейнера для зберігання поточної часової мітки
+                firstTimeRemainder = currentTimeRemainder;//В контейнер для зберігання залишку першої часової мітки початку тексту субтитра додаємо значення з контейнера для зберігання поточного залишку часової мітки 
                 currentTimestamp = null; // очищуємо контейнера для зберігання поточної часової мітки
+                currentTimeRemainder = '000'; //Обнуляємо контейнер для зберігання поточного залишку часової мітки 
             }
             if (subtitleTextContainer) { // а якщо при цьому контейнер для проміжного зберігання тексту субтитрів заповнений
                 secondTimestamp = currentTimestamp; //контейнеру для зберігання часової мітки  кінця тексту субтитра присвоюємо значення контейнера для зберігання поточної часової мітки
+                secondTimeRemainder = currentTimeRemainder;//В контейнер для зберігання залишку другої часової мітки початку тексту субтитра додаємо значення з контейнера для зберігання поточного залишку часової мітки 
                 subtitleTextContainer = normalizeСurrentTextContainerData(subtitleTextContainer); //Видаляємо зайві пробіли та переноси з тексу субтитрів за рахунок функції для нормалізації вмісту контейнеру для проміжного зберігання тексту субтитрів
-                сreatingArrayWithData(firstTimestamp, secondTimestamp, subtitleTextContainer); //Отримані часові мітки та текст субтитра додаємо в масив за допомогою функції для додавання даних по субтитрах в масив
-                currentTimestamp = null; //очищуємо контейнера для зберігання поточної часової мітки 
+                сreatingArrayWithData(firstTimestamp, secondTimestamp, firstTimeRemainder, secondTimeRemainder, subtitleTextContainer); //Отримані часові мітки, залишки часових міток та текст субтитра додаємо в масив за допомогою функції для додавання даних по субтитрах в масив
+                currentTimestamp = null; //очищуємо контейнера для зберігання поточної часової мітки
+                currentTimeRemainder = '000';
                 firstTimestamp = null; // очищуємо контейнер для зберігання часової мітки початку тексту субтитра
+                firstTimeRemainder = '000';
                 subtitleTextContainer = null; // очищуємо контейнер для проміжного зберігання тексту субтитрів
                 copyTextOn = false; //вимикаємо вмикач зчитування текстової інформаці
             }
@@ -192,8 +212,8 @@ function parseEnteredText() {
 }
 
 //Функція для додавання даних по субтитрах в масив
-function сreatingArrayWithData(t1, t2, sub) { 
-     scatteredDataArray.push({ firstTimestamp: t1, secondTimestamp: t2, subtitleText: sub,});
+function сreatingArrayWithData(t1, t2, tr1, tr2, sub) { 
+     scatteredDataArray.push({ firstTimestamp: t1, secondTimestamp: t2, firstTimeRemainder: tr1, secondTimeRemainder: tr2, subtitleText: sub,});
 }
 
 //Функція для нормалізації вмісту контейнеру для проміжного зберігання тексту субтитрів (видалення зайвих символів пробілу та переносу на новий рядок)
@@ -229,9 +249,9 @@ function normalizeСurrentTextContainerData(textсontainer) {
     for (let i = invertedTextContainer.length - 2; i >= 0; i -= 1) { //Цикл для перебору вмісту контейнеру для додавання очищеного тексту в інфертованому вигляді,
         // та покроковому додавання елементів масиву в контейнер для проміжного зберігання тексту, починаючи з передостаннього елементу масиву і закінчуючи першим (в результаті очищений від зайвих пробілів та переносів інвертований
         // текст повторно інвертується та приводиться до нормального вигляду)
-        textсontainer = textсontainer + invertedTextContainer[i] //до контейнеру для проміжного зберігання тексту додаємо поточний символ з контейнеру для додавання очищеного тексту в інфертованому вигляді
+        textсontainer = textсontainer + invertedTextContainer[i]; //до контейнеру для проміжного зберігання тексту додаємо поточний символ з контейнеру для додавання очищеного тексту в інфертованому вигляді
     }
-    return textсontainer; //функція повертає вміст контейнер для проміжного зберігання тексту
+    return textсontainer; //функція повертає вміст контейнера для проміжного зберігання тексту
 }
 
 
@@ -245,7 +265,7 @@ function normalizeСurrentTextContainerData(textсontainer) {
 /*---------------ГЕНЕРАЦІЯ СТРУКТУРИ ФАЙЛУ СУБТИТРІВ----------------------*/
 //Функція для генерації структури SRT - файлу
 function generateSRT() {
-    scatteredDataArray.forEach(({ firstTimestamp, secondTimestamp, subtitleText }, index) => { //Цикл перебору масиву для розпарсених данних, та генерації текстової структури субтитрів в форматі SRT
+    scatteredDataArray.forEach(({ firstTimestamp, secondTimestamp, firstTimeRemainder, secondTimeRemainder, subtitleText }, index) => { //Цикл перебору масиву для розпарсених данних, та генерації текстової структури субтитрів в форматі SRT
         //Блок для нормалізації типу першої часової мітки з формату X:XX до формату XX:XX
         if (firstTimestamp.length === 4) {
             firstTimestamp = `0${firstTimestamp}`;  //додаємо на початку "0:"
@@ -271,16 +291,16 @@ function generateSRT() {
         }
         //блок для покрокового конструювання фрагментів структури SRT файлу з даних масиву для розпарсених данних та об'єднання їх в єдиний рядок символів
         if (index === 0) { //конструюємо перший фрагмент субтитрів та додаємо в контейнер для зберігання субтитрів
-            subtitleContainer = `${index + 1}${String.fromCharCode(10)}${firstTimestamp},000 --> ${secondTimestamp},000${String.fromCharCode(10)}${subtitleText}${String.fromCharCode(10, 10)}`;
+            subtitleContainer = `${index + 1}${String.fromCharCode(10)}${firstTimestamp},${firstTimeRemainder} --> ${secondTimestamp},${secondTimeRemainder}${String.fromCharCode(10)}${subtitleText}${String.fromCharCode(10, 10)}`;
         } else {//конструюємо наступний фрагмент субтитрів та додаємо до наступних в контейнері для зберігання субтитрів
-            subtitleContainer =subtitleContainer + `${index + 1}${String.fromCharCode(10)}${firstTimestamp},000 --> ${secondTimestamp},000${String.fromCharCode(10)}${subtitleText}${String.fromCharCode(10,10)}`;
+            subtitleContainer = subtitleContainer + `${index + 1}${String.fromCharCode(10)}${firstTimestamp},${firstTimeRemainder} --> ${secondTimestamp},${secondTimeRemainder}${String.fromCharCode(10)}${subtitleText}${String.fromCharCode(10,10)}`;
         }
     });
 }
 
 //Функція для генерації структури SBV - файлу
 function generateSBV() {
-    scatteredDataArray.forEach(({ firstTimestamp, secondTimestamp, subtitleText }, index) => { //Цикл перебору масиву для розпарсених данних, та генерації текстової структури субтитрів в форматі SRT
+    scatteredDataArray.forEach(({ firstTimestamp, secondTimestamp, firstTimeRemainder, secondTimeRemainder, subtitleText }, index) => { //Цикл перебору масиву для розпарсених данних, та генерації текстової структури субтитрів в форматі SRT
         //Блок для нормалізації типу першої часової мітки з формату X:XX до формату XX:XX
         if (firstTimestamp.length === 4) {
             firstTimestamp = `0${firstTimestamp}`;  //додаємо на початку "0:"
@@ -321,9 +341,9 @@ function generateSBV() {
         }  //всі інші варіани (7 символів) лишаємо як є
         //блок для покрокового конструювання фрагментів структури SRT файлу з даних масиву для розпарсених данних та об'єднання їх в єдиний рядок символів
         if (index === 0) { //конструюємо перший фрагмент субтитрів та додаємо в контейнер для зберігання субтитрів
-            subtitleContainer = `${firstTimestamp}.000,${secondTimestamp}.000${String.fromCharCode(10)}${subtitleText}${String.fromCharCode(10, 10)}`;
+            subtitleContainer = `${firstTimestamp}.${firstTimeRemainder},${secondTimestamp}.${secondTimeRemainder}${String.fromCharCode(10)}${subtitleText}${String.fromCharCode(10, 10)}`;
         } else {//конструюємо наступний фрагмент субтитрів та додаємо до наступних в контейнері для зберігання субтитрів
-            subtitleContainer = subtitleContainer + `${firstTimestamp}.000,${secondTimestamp}.000${String.fromCharCode(10)}${subtitleText}${String.fromCharCode(10, 10)}`;
+            subtitleContainer = subtitleContainer + `${firstTimestamp}.${firstTimeRemainder},${secondTimestamp}.${secondTimeRemainder}${String.fromCharCode(10)}${subtitleText}${String.fromCharCode(10, 10)}`;
         }
     });
 }
